@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: ""
+    });
+  daovoice('update');
+  </script>
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="microservice," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="&amp;#8194;&amp;#8194;&amp;#8194;微服务，微小的服务，主要用于处理一个或是一组业务，独立运行，独立部署。相比于集成化的大而全的架构，他更加灵活，开发起来更加快捷，逻辑简单，结构清晰，更能体现出高内聚，松耦合的架构原则。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务简单实现">
+<meta property="og:url" content="https://yhpanic.github.io/2018/09/01/MicroService-1/index.html">
+<meta property="og:site_name" content="雍和">
+<meta property="og:description" content="&amp;#8194;&amp;#8194;&amp;#8194;微服务，微小的服务，主要用于处理一个或是一组业务，独立运行，独立部署。相比于集成化的大而全的架构，他更加灵活，开发起来更加快捷，逻辑简单，结构清晰，更能体现出高内聚，松耦合的架构原则。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-09-01T10:30:18.000Z">
+<meta property="article:modified_time" content="2019-11-28T15:37:33.000Z">
+<meta property="article:tag" content="microservice">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://yhpanic.github.io/2018/09/01/MicroService-1/"/>
+
+
+
+
+
+  <title>微服务简单实现 | 雍和</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+	<a target="_blank" rel="noopener" href="https://github.com/jamesunvin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">雍和</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about-me" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yhpanic.github.io/2018/09/01/MicroService-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="雍和">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微服务简单实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-01T18:30:18+08:00">
+                2018-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/01/MicroService-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/09/01/MicroService-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&#8194;&#8194;&#8194;微服务，微小的服务，主要用于处理一个或是一组业务，独立运行，独立部署。相比于集成化的大而全的架构，他更加灵活，开发起来更加快捷，逻辑简单，结构清晰，更能体现出高内聚，松耦合的架构原则。<span id="more"></span>微服务采用C/S架构模式，客户端与服务端之间通过轻量级的通信机制GRPC进行通信，支持不同语言间服务调用。也就是说我们把一些相对独立且调用频繁的模块抽取出来单独开发、部署、维护，这些服务就是微服务，但是和单独的部署项目不同的是，这些服务支持rpc，所以无论是什么语言开发的平台后端都可以像本地调用一样调用这些功能模块。有关微服务架构的优缺点请移步<a target="_blank" rel="noopener" href="http://dockone.io/article/394">微服务架构的优势与不足</a>。目前相对成熟的微服务框架有很多，一般情况下我们是没有必要重复造轮子的。使用不同的框架，其服务端和客户端实现略有不同。如<a target="_blank" rel="noopener" href="https://github.com/go-kit/kit">go-kit</a>和<a target="_blank" rel="noopener" href="https://github.com/micro/go-micro">go-micro</a>。</p>
+<h2 id="GRPC"><a href="#GRPC" class="headerlink" title="GRPC"></a>GRPC</h2><p>&#8194;&#8194;&#8194;GRPC是Google公司基于Protobuf开发的跨语言的开源RPC框架。GRPC基于HTTP/2协议设计，可以基于一个HTTP/2链接提供多个服务，对于移动设备更加友好。翻译成人话就是GRPC是google实现的一套RPC框架。rpc(remote procedure call)远程过程调用，基本思想是像本地调用一样调用远程服务。每个微服务有自己独立的代码库，各自之间在通信时需要高效的协议，要遵循一定的数据结构来解析和编码要传输的数据，在微服务中常使用 <a target="_blank" rel="noopener" href="https://developers.google.com/protocol-buffers/">protobuf</a> 来定义。protobuf是Google公司开发的一种数据描述语言，同时也是一种协议，它根据我们定义的.proto文件的内容，通过工具生成我们需要使用的数据结构和相关的方法。客户端和服务端各自基于protobuf生成相关的代码，如果使用的是同一种语言开发可以将生成的代码公用，减少冗余。</p>
+<h2 id="定义通信规则"><a href="#定义通信规则" class="headerlink" title="定义通信规则"></a>定义通信规则</h2><h3 id="定义user-proto文件"><a href="#定义user-proto文件" class="headerlink" title="定义user.proto文件"></a>定义user.proto文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;	// 指定语法格式，注意 proto3 不再支持 proto2 的 required 和 optional</span><br><span class="line">package proto;		// 指定生成的 user.pb.go 的包名，防止命名冲突</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// service 定义开放调用的服务，即 UserInfoService 微服务</span><br><span class="line">service UserInfoService &#123;</span><br><span class="line">    // rpc 定义服务内的 GetUserInfo 远程调用</span><br><span class="line">    rpc GetUserInfo (UserRequest) returns (UserResponse) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// message 对应生成代码的 struct</span><br><span class="line">// 定义客户端请求的数据格式</span><br><span class="line">message UserRequest &#123;</span><br><span class="line">	// [修饰符] 类型 字段名 = 标识符;</span><br><span class="line">	string name = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 定义服务端响应的数据格式</span><br><span class="line">message UserResponse &#123;</span><br><span class="line">    int32 id = 1;</span><br><span class="line">    string name = 2;</span><br><span class="line">    int32 age = 3;</span><br><span class="line">    repeated string title = 4;	// repeated 修饰符表示字段是可变数组，即 slice 类型</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>&#8194;&#8194;&#8194;protoc可以从<a target="_blank" rel="noopener" href="https://github.com/google/protobuf/releases">https://github.com/google/protobuf/releases</a> 下载，自行解压安装。Protobuf核心的工具集是C++语言开发的，在官方的protoc编译器中并不支持Go语言，所以还需要使用命令go get github.com/golang/protobuf/protoc-gen-go 安装相应的插件。安装完成之后，可以通过以下命令编译生成代码。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">protoc --go_out=plugins=grpc:. ./user.proto</span><br><span class="line">//生成go相关代码使用 --go_out ,生成python代码就是 --python_out</span><br><span class="line">//plugins=grpc表示生成grpc相关代码，如果是自定义了代码生成插件可以改成相应的插件名，如--go_out=plugins=doggrpc:.</span><br><span class="line">//--go_out=plugins=grpc:.中&quot;.&quot;表示生成到当前目录 ./user.proto是我们定义的文件</span><br></pre></td></tr></table></figure><br>生成代码如下：<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> proto</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	context <span class="string">&quot;golang.org/x/net/context&quot;</span></span><br><span class="line">	grpc <span class="string">&quot;google.golang.org/grpc&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 请求结构</span></span><br><span class="line"><span class="keyword">type</span> UserRequest <span class="keyword">struct</span> &#123;</span><br><span class="line">	Name <span class="keyword">string</span> <span class="string">`protobuf:&quot;bytes,1,opt,name=name&quot; json:&quot;name,omitempty&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为字段自动生成的 Getter</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(m *UserRequest)</span> <span class="title">GetName</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> m != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> m.Name</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 响应结构</span></span><br><span class="line"><span class="keyword">type</span> UserResponse <span class="keyword">struct</span> &#123;</span><br><span class="line">	Id    <span class="keyword">int32</span>    <span class="string">`protobuf:&quot;varint,1,opt,name=id&quot; json:&quot;id,omitempty&quot;`</span></span><br><span class="line">	Name  <span class="keyword">string</span>   <span class="string">`protobuf:&quot;bytes,2,opt,name=name&quot; json:&quot;name,omitempty&quot;`</span></span><br><span class="line">	Age   <span class="keyword">int32</span>    <span class="string">`protobuf:&quot;varint,3,opt,name=age&quot; json:&quot;age,omitempty&quot;`</span></span><br><span class="line">	Title []<span class="keyword">string</span> <span class="string">`protobuf:&quot;bytes,4,rep,name=title&quot; json:&quot;title,omitempty&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 客户端需实现的接口</span></span><br><span class="line"><span class="keyword">type</span> UserInfoServiceClient <span class="keyword">interface</span> &#123;</span><br><span class="line">	GetUserInfo(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务端需实现的接口</span></span><br><span class="line"><span class="keyword">type</span> UserInfoServiceServer <span class="keyword">interface</span> &#123;</span><br><span class="line">	GetUserInfo(context.Context, *UserRequest) (*UserResponse, error)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将微服务注册到 grpc</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">RegisterUserInfoServiceServer</span><span class="params">(s *grpc.Server, srv UserInfoServiceServer)</span></span> &#123;</span><br><span class="line">	s.RegisterService(&amp;_UserInfoService_serviceDesc, srv)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 处理请求</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> _<span class="title">UserInfoService_GetUserInfo_Handler</span><span class="params">(srv <span class="keyword">interface</span>&#123;&#125;, ctx context.Context, dec <span class="keyword">func</span>(<span class="keyword">interface</span>&#123;&#125;)</span> <span class="title">error</span>, <span class="title">interceptor</span> <span class="title">grpc</span>.<span class="title">UnaryServerInterceptor</span>) <span class="params">(<span class="keyword">interface</span>&#123;&#125;, error)</span></span> &#123;...&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="服务端实现"><a href="#服务端实现" class="headerlink" title="服务端实现"></a>服务端实现</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (...)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义服务端实现约定的接口</span></span><br><span class="line"><span class="keyword">type</span> UserInfoService <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> u = UserInfoService&#123;&#125;</span><br><span class="line"><span class="comment">// 实现 interface</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *UserInfoService)</span> <span class="title">GetUserInfo</span><span class="params">(ctx context.Context, req *pb.UserRequest)</span> <span class="params">(resp *pb.UserResponse, err error)</span></span> &#123;</span><br><span class="line">	name := req.Name</span><br><span class="line">	<span class="comment">// 模拟在数据库中查找用户信息</span></span><br><span class="line">	<span class="keyword">if</span> name == <span class="string">&quot;yonghe&quot;</span> &#123;</span><br><span class="line">		resp = &amp;pb.UserResponse&#123;</span><br><span class="line">			Id:    <span class="number">007</span>,</span><br><span class="line">			Name:  name,</span><br><span class="line">			Age:   <span class="number">18</span>,</span><br><span class="line">			Title: []<span class="keyword">string</span>&#123;<span class="string">&quot;Programer&quot;</span>, <span class="string">&quot;Gopher&quot;</span>&#125;, <span class="comment">// repeated 字段是 slice 类型</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	err = <span class="literal">nil</span></span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	port := <span class="string">&quot;:65532&quot;</span></span><br><span class="line">	conn, err := net.Listen(<span class="string">&quot;tcp&quot;</span>, port)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;listen error: %v\n&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(<span class="string">&quot;listen %s\n&quot;</span>, port)</span><br><span class="line">	s := grpc.NewServer()</span><br><span class="line">    <span class="comment">// 将 UserInfoService 注册到 gRPC</span></span><br><span class="line">    <span class="comment">// 注意第二个参数 UserInfoServiceServer 是接口类型的变量</span></span><br><span class="line">	<span class="comment">// 需要取地址传参</span></span><br><span class="line">	pb.RegisterUserInfoServiceServer(s, &amp;u)</span><br><span class="line">    s.Serve(conn)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="客户端调用"><a href="#客户端调用" class="headerlink" title="客户端调用"></a>客户端调用</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (...)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	conn, err := grpc.Dial(<span class="string">&quot;:65532&quot;</span>, grpc.WithInsecure())</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;dial error: %v\n&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> conn.Close()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 实例化 UserInfoService 微服务的客户端</span></span><br><span class="line">	client := pb.NewUserInfoServiceClient(conn)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 调用服务</span></span><br><span class="line">	req := <span class="built_in">new</span>(pb.UserRequest)</span><br><span class="line">	req.Name = <span class="string">&quot;yonghe&quot;</span></span><br><span class="line">	resp, err := client.GetUserInfo(context.Background(), req)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;resp error: %v\n&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Printf(<span class="string">&quot;Recevied: %v\n&quot;</span>, resp)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一个简单的微服务的实现分为3个部分：<br><br><b>1. 定义通信规则。</b><br><br>使用protobuf定义服务的接口和使用的数据结构，然后通过编译生成需要的代码和方法。<br><br><b>2.实现服务端</b><br><br>监听端口–实例化服务端–注册微服务–启动服务端<br><br><b>3.实现客户端</b><br><br>建立连接–实例化服务端–调用接口</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/microservice/" rel="tag"><i class="fa fa-tag"></i> microservice</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/14/golang%E4%B8%AD%E4%B8%8B%E5%88%92%E7%BA%BF%E7%9A%84%E6%84%8F%E4%B9%89/" rel="prev" title="golang中下划线的意义">
+                golang中下划线的意义 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+     
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/img/avatar.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yhpanic" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:yhpanic@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+<br>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GRPC"><span class="nav-number">1.</span> <span class="nav-text">GRPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E9%80%9A%E4%BF%A1%E8%A7%84%E5%88%99"><span class="nav-number">2.</span> <span class="nav-text">定义通信规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89user-proto%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">定义user.proto文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">2.2.</span> <span class="nav-text">编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">服务端实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B0%83%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">客户端调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+    </div>
+     <!-- Insert clustrmaps.com start -->
+      <a target="_blank" rel="noopener" href="https://clustrmaps.com/site/1bd3h"  title="Visit tracker"><img src="//www.clustrmaps.com/map_v2.png?d=PiFK_wyTZjD8HFpUwoVijSs30knUGUvvFXAQ2R6xVOU&cl=ffffff" /></a>
+
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>|
+<span id="busuanzi_container_site_pv">
+  本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Sunvin.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://yhpanic.github.io/2018/09/01/MicroService-1/';
+          this.page.identifier = '2018/09/01/MicroService-1/';
+          this.page.title = '微服务简单实现';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Sunvin.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>
